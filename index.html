@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        / Chatbot container /
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        / Chat header /
+        .chat-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        / Chat messages container /
+        .chat-messages {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        / Chat input /
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        / Chat send button /
+        .chat-send-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <button id="open-chat" style="position: fixed; bottom: 20px; right: 20px; background-color: #007bff; color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; line-height: 50px; cursor: pointer; text-align: center;">Chat</button>
+
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">Chatbot</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+        <button class="chat-send-button" id="send-button">Send</button>
+    </div>
+
+    <script>
+        var openChatButton = document.getElementById("open-chat");
+        var chatContainer = document.getElementById("chat-container");
+        var chatInput = document.getElementById("chat-input");
+        var chatMessages = document.getElementById("chat-messages");
+
+        // Show or hide the chat container
+        openChatButton.addEventListener("click", function() {
+            if (chatContainer.style.display === "none") {
+                chatContainer.style.display = "block";
+            } else {
+                chatContainer.style.display = "none";
+            }
+        });
+
+        // Function to send a message
+        function sendMessage(message, isUser) {
+            var messageDiv = document.createElement("div");
+            messageDiv.classList.add(isUser ? "user-message" : "bot-message");
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatInput.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Event listener for sending messages
+        document.getElementById("send-button").addEventListener("click", function() {
+            var userMessage = chatInput.value;
+            sendMessage(userMessage, true);
+            // Simulate bot response (you can replace this with actual chatbot logic)
+            setTimeout(function() {
+                sendMessage("This is a bot response.", false);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
